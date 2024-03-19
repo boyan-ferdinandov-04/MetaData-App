@@ -44,19 +44,23 @@
             label7 = new Label();
             titleBox = new TextBox();
             button2 = new Button();
+            pictureBox1 = new PictureBox();
+            pictureButton = new Button();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(308, 109);
+            textBox1.Location = new Point(446, 116);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(327, 23);
             textBox1.TabIndex = 0;
+            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(214, 112);
+            label1.Location = new Point(352, 119);
             label1.Name = "label1";
             label1.Size = new Size(55, 15);
             label1.TabIndex = 1;
@@ -65,14 +69,14 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(214, 160);
+            label2.Location = new Point(352, 167);
             label2.Name = "label2";
             label2.Size = new Size(0, 15);
             label2.TabIndex = 3;
             // 
             // artistBox
             // 
-            artistBox.Location = new Point(308, 157);
+            artistBox.Location = new Point(446, 164);
             artistBox.Name = "artistBox";
             artistBox.Size = new Size(327, 23);
             artistBox.TabIndex = 2;
@@ -80,7 +84,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(220, 160);
+            label3.Location = new Point(358, 167);
             label3.Name = "label3";
             label3.Size = new Size(35, 15);
             label3.TabIndex = 4;
@@ -88,7 +92,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(391, 428);
+            button1.Location = new Point(800, 119);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 5;
@@ -103,7 +107,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(214, 202);
+            label5.Location = new Point(352, 209);
             label5.Name = "label5";
             label5.Size = new Size(46, 15);
             label5.TabIndex = 7;
@@ -111,7 +115,7 @@
             // 
             // albumBox
             // 
-            albumBox.Location = new Point(308, 199);
+            albumBox.Location = new Point(446, 206);
             albumBox.Name = "albumBox";
             albumBox.Size = new Size(327, 23);
             albumBox.TabIndex = 6;
@@ -119,7 +123,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(214, 245);
+            label6.Location = new Point(352, 252);
             label6.Name = "label6";
             label6.Size = new Size(32, 15);
             label6.TabIndex = 9;
@@ -127,7 +131,7 @@
             // 
             // yearBox
             // 
-            yearBox.Location = new Point(308, 242);
+            yearBox.Location = new Point(446, 249);
             yearBox.Name = "yearBox";
             yearBox.Size = new Size(327, 23);
             yearBox.TabIndex = 8;
@@ -135,7 +139,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(199, 288);
+            label4.Location = new Point(337, 295);
             label4.Name = "label4";
             label4.Size = new Size(84, 15);
             label4.TabIndex = 11;
@@ -143,7 +147,7 @@
             // 
             // trackBox
             // 
-            trackBox.Location = new Point(308, 285);
+            trackBox.Location = new Point(446, 292);
             trackBox.Name = "trackBox";
             trackBox.Size = new Size(327, 23);
             trackBox.TabIndex = 10;
@@ -151,7 +155,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(199, 326);
+            label7.Location = new Point(337, 333);
             label7.Name = "label7";
             label7.Size = new Size(32, 15);
             label7.TabIndex = 13;
@@ -159,14 +163,14 @@
             // 
             // titleBox
             // 
-            titleBox.Location = new Point(308, 323);
+            titleBox.Location = new Point(446, 330);
             titleBox.Name = "titleBox";
             titleBox.Size = new Size(327, 23);
             titleBox.TabIndex = 12;
             // 
             // button2
             // 
-            button2.Location = new Point(590, 428);
+            button2.Location = new Point(1161, 68);
             button2.Name = "button2";
             button2.Size = new Size(75, 23);
             button2.TabIndex = 14;
@@ -174,11 +178,32 @@
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Location = new Point(1032, 116);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(490, 454);
+            pictureBox1.TabIndex = 15;
+            pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
+            // 
+            // pictureButton
+            // 
+            pictureButton.Location = new Point(1032, 68);
+            pictureButton.Name = "pictureButton";
+            pictureButton.Size = new Size(75, 23);
+            pictureButton.TabIndex = 16;
+            pictureButton.Text = "Picture Box";
+            pictureButton.UseVisualStyleBackColor = true;
+            pictureButton.Click += pictureButton_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(982, 532);
+            ClientSize = new Size(1614, 675);
+            Controls.Add(pictureButton);
+            Controls.Add(pictureBox1);
             Controls.Add(button2);
             Controls.Add(label7);
             Controls.Add(titleBox);
@@ -195,8 +220,9 @@
             Controls.Add(label1);
             Controls.Add(textBox1);
             Name = "Form1";
-            Text = "Form1";
+            Text = "Metadata App";
             Load += Form1_Load;
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -219,5 +245,7 @@
         private Label label7;
         private TextBox titleBox;
         private Button button2;
+        private PictureBox pictureBox1;
+        private Button pictureButton;
     }
 }
