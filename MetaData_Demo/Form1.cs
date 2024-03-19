@@ -21,16 +21,16 @@ namespace MetaData_Demo
         private void button1_Click(object sender, EventArgs e)
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
-            fileDialog.Filter = "mp3 files|*.mp3";
+            fileDialog.Filter = "audio files|*.mp3;*.flac;*.m4a;*.wav";
 
             if (fileDialog.ShowDialog() == DialogResult.OK)
             {
                 textBox1.Text = fileDialog.FileName;
-                using (var mp3File = TagLib.File.Create(fileDialog.FileName))
+                using (var audioFile = TagLib.File.Create(fileDialog.FileName))
                 {
                     selectedFilePath = fileDialog.FileName;
                     textBox1.Text = selectedFilePath;
-
+                    MetaDataLoader(selectedFilePath);
                 }
             }
 
@@ -45,7 +45,15 @@ namespace MetaData_Demo
                 yearBox.Text = mp3File.Tag.Year.ToString();
                 titleBox.Text = mp3File.Tag.Title.ToString();
 
-
+                if (mp3File.Tag.Pictures.Length > 0)
+                {
+                    var picture = mp3File.Tag.Pictures[0];
+                    using (MemoryStream ms = new MemoryStream(picture.Data.Data))
+                    {
+                        pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+                        pictureBox1.Image = Image.FromStream(ms);
+                    }
+                }
 
             }
         }
@@ -54,8 +62,11 @@ namespace MetaData_Demo
         {
             using (var mp3File = TagLib.File.Create(path))
             {
-                string[] artists = artistBox.Text.Split(new char[] { ',', }, StringSplitOptions.RemoveEmptyEntries);
-                mp3File.Tag.AlbumArtists = artists;
+                string[] mainArtists = artistBox.Text.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                string[] contributingArtists = contributingArtistBox.Text.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                mp3File.Tag.Performers = mainArtists;
+                mp3File.Tag.Performers = contributingArtists;
+                
                 mp3File.Tag.Track = uint.Parse(trackBox.Text);
                 mp3File.Tag.Album = albumBox.Text;
                 mp3File.Tag.Year = uint.Parse(yearBox.Text);
@@ -78,30 +89,13 @@ namespace MetaData_Demo
             }
             else
             {
-                throw new Exception("Please select an mp3 file");
+                throw new Exception("Please select an audio file");
             }
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
 
-        }
-
-        private void pictureButton_Click(object sender, EventArgs e)
-        {
-            using (var mp3File = TagLib.File.Create(selectedFilePath))
-            {
-                if (mp3File.Tag.Pictures.Length > 0)
-                {
-                    var picture = mp3File.Tag.Pictures[0];
-                    using (MemoryStream ms = new MemoryStream(picture.Data.Data))
-                    {
-                        pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-                        pictureBox1.Image = Image.FromStream(ms);
-                    }
-                }
-
-            }
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
