@@ -88,11 +88,14 @@ namespace MetaData_Demo
                 mp3File.Tag.Genres = genres;
 
 
-                imageStream.Position = 0;
-                mp3File.Tag.Pictures = new Picture[]
+                if (imageStream != null)
                 {
-                    new TagLib.Picture(ByteVector.FromStream(imageStream))
-                };
+                    imageStream.Position = 0;
+                    mp3File.Tag.Pictures = new Picture[]
+                    {
+                        new TagLib.Picture(ByteVector.FromStream(imageStream))
+                    };
+                }
 
                 mp3File.Save();
             }
