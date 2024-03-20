@@ -39,11 +39,17 @@ namespace MetaData_Demo
         {
             using (var mp3File = TagLib.File.Create(path))
             {
+                string[] genres = mp3File.Tag.Genres;
+
                 artistBox.Text = mp3File.Tag.FirstAlbumArtist;
                 albumBox.Text = mp3File.Tag.Album.ToString();
                 trackBox.Text = mp3File.Tag.Track.ToString();
                 yearBox.Text = mp3File.Tag.Year.ToString();
                 titleBox.Text = mp3File.Tag.Title.ToString();
+                foreach(var genre in genres)
+                {
+                    genreBox.Text = $"{genre} ";
+                }
 
                 if (mp3File.Tag.Pictures.Length > 0)
                 {
@@ -64,6 +70,7 @@ namespace MetaData_Demo
             {
                 string[] mainArtists = artistBox.Text.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 string[] contributingArtists = contributingArtistBox.Text.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                string[] genres = genreBox.Text.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries);
                 mp3File.Tag.Performers = mainArtists;
                 mp3File.Tag.Performers = contributingArtists;
                 
@@ -71,6 +78,8 @@ namespace MetaData_Demo
                 mp3File.Tag.Album = albumBox.Text;
                 mp3File.Tag.Year = uint.Parse(yearBox.Text);
                 mp3File.Tag.Title = titleBox.Text;
+                mp3File.Tag.Genres = genres;
+                
                 mp3File.Save();
             }
         }
