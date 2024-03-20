@@ -1,11 +1,14 @@
 
 
+using TagLib;
+
 namespace MetaData_Demo
 {
     public partial class Form1 : Form
     {
         private string selectedFilePath;
         private TagLib.IPicture Picture;
+        private MemoryStream imageStream;
 
         public Form1()
         {
@@ -39,16 +42,20 @@ namespace MetaData_Demo
         {
             using (var mp3File = TagLib.File.Create(path))
             {
-                string[] genres = mp3File.Tag.Genres;
+                string[]? genres = mp3File.Tag.Genres;
 
-                artistBox.Text = mp3File.Tag.FirstAlbumArtist;
-                albumBox.Text = mp3File.Tag.Album.ToString();
-                trackBox.Text = mp3File.Tag.Track.ToString();
-                yearBox.Text = mp3File.Tag.Year.ToString();
-                titleBox.Text = mp3File.Tag.Title.ToString();
-                foreach(var genre in genres)
+                artistBox.Text = mp3File.Tag.FirstAlbumArtist ?? string.Empty;
+                albumBox.Text = mp3File.Tag.Album?.ToString() ?? string.Empty;
+                trackBox.Text = mp3File.Tag.Track.ToString() ?? string.Empty;
+                yearBox.Text = mp3File.Tag.Year.ToString() ?? string.Empty;
+                titleBox.Text = mp3File.Tag.Title ?? string.Empty;
+
+                if (genres != null)
                 {
-                    genreBox.Text = $"{genre} ";
+                    foreach (var genre in genres)
+                    {
+                        genreBox.Text = $"{genre} ";
+                    }
                 }
 
                 if (mp3File.Tag.Pictures.Length > 0)
@@ -70,16 +77,23 @@ namespace MetaData_Demo
             {
                 string[] mainArtists = artistBox.Text.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 string[] contributingArtists = contributingArtistBox.Text.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                string[] genres = genreBox.Text.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries);
+                string[] genres = genreBox.Text.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 mp3File.Tag.Performers = mainArtists;
                 mp3File.Tag.Performers = contributingArtists;
-                
+
                 mp3File.Tag.Track = uint.Parse(trackBox.Text);
                 mp3File.Tag.Album = albumBox.Text;
                 mp3File.Tag.Year = uint.Parse(yearBox.Text);
                 mp3File.Tag.Title = titleBox.Text;
                 mp3File.Tag.Genres = genres;
-                
+
+
+                imageStream.Position = 0;
+                mp3File.Tag.Pictures = new Picture[]
+                {
+                    new TagLib.Picture(ByteVector.FromStream(imageStream))
+                };
+
                 mp3File.Save();
             }
         }
@@ -110,6 +124,31 @@ namespace MetaData_Demo
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.Filter = "Pictures|*.jpg;*.png";
+
+            if (fileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = fileDialog.FileName;
+                try
+                {
+                    using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite))
+                    {
+                        imageStream = new();
+                        fs.CopyTo(imageStream);
+                        pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+                        pictureBox1.Image = Image.FromStream(fs);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: Could not load the image. " + ex.Message);
+                }
+            }
         }
     }
 }

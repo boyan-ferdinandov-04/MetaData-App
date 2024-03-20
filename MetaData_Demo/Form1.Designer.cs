@@ -50,6 +50,7 @@
             contributingArtistBox = new TextBox();
             label10 = new Label();
             genreBox = new TextBox();
+            button3 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -231,11 +232,22 @@
             genreBox.Size = new Size(327, 23);
             genreBox.TabIndex = 20;
             // 
+            // button3
+            // 
+            button3.Location = new Point(842, 87);
+            button3.Name = "button3";
+            button3.Size = new Size(112, 23);
+            button3.TabIndex = 22;
+            button3.Text = "Attach Photo:";
+            button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1246, 556);
+            Controls.Add(button3);
             Controls.Add(label10);
             Controls.Add(genreBox);
             Controls.Add(label8);
@@ -289,5 +301,6 @@
         private TextBox contributingArtistBox;
         private Label label10;
         private TextBox genreBox;
+        private Button button3;
     }
 }
