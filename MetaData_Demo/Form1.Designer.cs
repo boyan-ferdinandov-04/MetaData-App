@@ -48,9 +48,6 @@
             label8 = new Label();
             label9 = new Label();
             contributingArtistBox = new TextBox();
-            label10 = new Label();
-            genreBox = new TextBox();
-            button3 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -187,7 +184,7 @@
             // 
             pictureBox1.Location = new Point(842, 128);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(350, 330);
+            pictureBox1.Size = new Size(295, 262);
             pictureBox1.TabIndex = 15;
             pictureBox1.TabStop = false;
             pictureBox1.Click += pictureBox1_Click;
@@ -216,40 +213,11 @@
             contributingArtistBox.Size = new Size(327, 23);
             contributingArtistBox.TabIndex = 17;
             // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Location = new Point(212, 421);
-            label10.Name = "label10";
-            label10.Size = new Size(38, 15);
-            label10.TabIndex = 21;
-            label10.Text = "Genre";
-            // 
-            // genreBox
-            // 
-            genreBox.Location = new Point(292, 421);
-            genreBox.Name = "genreBox";
-            genreBox.Size = new Size(327, 23);
-            genreBox.TabIndex = 20;
-            // 
-            // button3
-            // 
-            button3.Location = new Point(842, 89);
-            button3.Name = "button3";
-            button3.Size = new Size(94, 23);
-            button3.TabIndex = 22;
-            button3.Text = "Attach Photo";
-            button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1246, 556);
-            Controls.Add(button3);
-            Controls.Add(label10);
-            Controls.Add(genreBox);
             Controls.Add(label8);
             Controls.Add(label9);
             Controls.Add(contributingArtistBox);
@@ -299,8 +267,5 @@
         private Label label8;
         private Label label9;
         private TextBox contributingArtistBox;
-        private Label label10;
-        private TextBox genreBox;
-        private Button button3;
     }
 }
